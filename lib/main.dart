@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/providers/movie_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => MovieProvider())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,29 +35,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<String> _moviesList = [
-    "The Shawshank Redemption",
-    "Avatar",
-    "Titanic",
-    "The Karate Kid",
-    "Pulp Fiction",
-    "The Wolf of the Wall Street",
-    "Catch Me If You Can",
-    "Shutter Island",
-    "Interstellar",
-    "The Dark Knight",
-    "The Prestige",
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final movieModel = Provider.of<MovieProvider>(context);
+    final movies = movieModel.loadMovies();
+
     return Scaffold(
       appBar: AppBar(title: Text("Movie App")),
       body: Center(
         child: ListView.builder(
-          itemCount: _moviesList.length,
+          itemCount: movies.length,
           itemBuilder: (context, index) {
-            return(Text(_moviesList[index]));
+            return (Text(movies[index]));
           },
         ),
       ),
