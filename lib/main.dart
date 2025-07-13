@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
         child: ListView.builder(
           itemCount: movies.length,
           itemBuilder: (context, index) {
-            return (Text(movies[index]));
+            return Card(child: Center(child: Text(movies[index])));
           },
         ),
       ),
