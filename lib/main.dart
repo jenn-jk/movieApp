@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,9 +37,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    Provider.of<MovieProvider>(context, listen: false).loadMovies(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final movieModel = Provider.of<MovieProvider>(context);
-    final movies = movieModel.loadMovies();
+    final movies = movieModel.moviesList;
 
     return Scaffold(
       appBar: AppBar(title: Text("Movie App")),
@@ -46,11 +53,12 @@ class _HomeState extends State<Home> {
         child: ListView.builder(
           itemCount: movies.length,
           itemBuilder: (context, index) {
+            Movie movie = movies[index];
             return ListTile(
-              title: Text(movies[index]),
-              subtitle: Text("Dummy Text Here"),
+              title: Text(movie.title),
+              subtitle: Text(movie.year),
               trailing: Icon(Icons.delete_rounded),
-              leading: CircleAvatar(child: Text(movies[index][0])),
+              leading: CircleAvatar(child: Text(movie.title[0])),
             );
           },
         ),
