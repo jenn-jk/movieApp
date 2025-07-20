@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/pages/movie_details.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -54,11 +55,52 @@ class _HomeState extends State<Home> {
           itemCount: movies.length,
           itemBuilder: (context, index) {
             Movie movie = movies[index];
-            return ListTile(
-              title: Text(movie.title),
-              subtitle: Text(movie.year),
-              trailing: Icon(Icons.delete_rounded),
-              leading: CircleAvatar(child: Text(movie.title[0])),
+            return Card(
+              child: ExpansionTile(
+                title: Text(movie.title),
+                subtitle: Text("Director: ${movie.director}"),
+                leading: CircleAvatar(child: Text(movie.title[0])),
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 50),
+                    child: Column(
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: [
+                              TextSpan(
+                                text: "Released: ",
+                                style: Theme.of(context).textTheme.labelLarge!
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: movie.released),
+                              TextSpan(
+                                text: "\nPlot: ",
+                                style: Theme.of(context).textTheme.labelLarge!
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: movie.plot),
+                            ],
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetails(),
+                              ),
+                            ),
+                          },
+                          child: Text("Read More"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         ),
