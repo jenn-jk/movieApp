@@ -3,10 +3,7 @@ import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/pages/movie_details.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({
-    super.key,
-    required this.movie,
-  });
+  const MovieCard({super.key, required this.movie});
 
   final Movie movie;
 
@@ -16,7 +13,10 @@ class MovieCard extends StatelessWidget {
       child: ExpansionTile(
         title: Text(movie.title),
         subtitle: Text("Director: ${movie.director}"),
-        leading: CircleAvatar(child: Text(movie.title[0])),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(movie.images[0]),
+          // child: Text(movie.title[0])
+        ),
         children: [
           Container(
             alignment: Alignment.centerLeft,
@@ -29,14 +29,16 @@ class MovieCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: "Released: ",
-                        style: Theme.of(context).textTheme.labelLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       TextSpan(text: movie.released),
                       TextSpan(
                         text: "\nPlot: ",
-                        style: Theme.of(context).textTheme.labelLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       TextSpan(text: movie.plot),
                     ],
@@ -47,8 +49,7 @@ class MovieCard extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            MovieDetails(movie: movie),
+                        builder: (context) => MovieDetails(movie: movie),
                       ),
                     ),
                   },
