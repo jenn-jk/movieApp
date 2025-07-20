@@ -3,9 +3,10 @@ import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/pages/movie_details.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({super.key, required this.movie});
+  const MovieCard({super.key, required this.movie, this.isDetailsRequired = true});
 
   final Movie movie;
+  final bool isDetailsRequired;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class MovieCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                TextButton(
+                !isDetailsRequired ? const Text("") : TextButton(
                   onPressed: () => {
                     Navigator.push(
                       context,
